@@ -89,6 +89,7 @@ nav .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap}
 section{
   padding:6rem 2rem;max-width:72rem;margin:0 auto;
   border-top:1px solid var(--border-subtle);
+  scroll-margin-top:3rem;
 }
 .section-header{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:3rem;flex-wrap:wrap}
 .section-num{
@@ -221,7 +222,8 @@ footer{
   .section-header{flex-direction:column;gap:.5rem}
   .section-header .section-year{margin-left:0}
   /* Fix reveal not triggering on mobile anchor navigation */
-  .reveal{opacity:1;transform:none;transition:none}
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  section{scroll-margin-top:3rem}
   /* Fix demo internal layouts */
   .xanadu-grid{grid-template-columns:1fr}
   /* Fix demo input buttons */
