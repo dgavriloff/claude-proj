@@ -273,12 +273,9 @@ footer{
 .fade-up-text > :nth-child(8){animation-delay:.8s}
 .fade-up-text > :nth-child(9){animation-delay:.9s}
 
-/* scroll reveal — gentle fade only, no hidden-by-default */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
-.reveal.visible{opacity:1;transform:none}
-/* Fallback: if JS/observer fails, sections must still be visible */
-@media(max-width:768px){.reveal{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+/* scroll reveal — enhance only, never hide */
+.reveal{transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.reveal.visible{animation:fadeUp .5s var(--ease) both}
 </style>
 </head>
 <body>
