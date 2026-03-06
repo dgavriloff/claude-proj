@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Roads Not Taken — Classic Computing Ideas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "IBM Plex Mono", "Courier New", monospace;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+
+        h1 {
+            font-size: 2rem;
+            color: #f0c040;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            color: #808080;
+            font-size: 0.9rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .pioneer {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border-left: 3px solid #333;
+            transition: border-color 0.3s;
+        }
+        .pioneer:hover { border-color: #f0c040; }
+
+        .pioneer-name {
+            font-size: 1.3rem;
+            color: #70b0ff;
+            margin-bottom: 0.3rem;
+        }
+        .pioneer-year {
+            color: #606060;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+        .pioneer-idea {
+            font-size: 1rem;
+            color: #c0c0c0;
+            margin-bottom: 1rem;
+        }
+        .quote {
+            font-style: italic;
+            color: #a0a080;
+            padding: 0.8rem 1.2rem;
+            border-left: 2px solid #505030;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .what-happened {
+            color: #c05050;
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+        }
+        .module-name {
+            display: inline-block;
+            background: #1a1a2e;
+            color: #70b0ff;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #f0c040, #70b0ff, #50c070, #c05050);
+        }
+        .timeline .pioneer::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 1.5rem;
+            width: 10px;
+            height: 10px;
+            background: #f0c040;
+            border-radius: 50%;
+        }
+        .timeline .pioneer { position: relative; }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            color: #505050;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        footer em { color: #808080; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>THE ROADS NOT TAKEN</h1>
+        <p class="subtitle">Nine ideas from computing's golden age, rebuilt. Because they were right.</p>
+
+        <div class="timeline">
+
+            <div class="pioneer">
+                <div class="pioneer-name">Vannevar Bush — The Memex</div>
+                <div class="pioneer-year">1945 · "As We May Think" · Atlantic Monthly</div>
+                <div class="pioneer-idea">
+                    A personal device for storing all your books, records, and communications,
+                    navigable by <strong>associative trails</strong> — personal paths through
+                    knowledge that mirror how the mind actually works.
+                </div>
+                <div class="quote">
+                    "Wholly new forms of encyclopedias will appear, ready-made with a trail
+                    of associative trails running through them."
+                </div>
+                <div class="what-happened">
+                    What we got instead: hierarchical file systems and keyword search.
+                    The trail — the personal, shareable path through knowledge — was lost.
+                </div>
+                <span class="module-name">memex/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">Newell, Shaw & Simon — IPL</div>
+                <div class="pioneer-year">1956 · RAND Corporation · The Logic Theorist</div>
+                <div class="pioneer-idea">
+                    The first list-processing language, built to power the first AI program.
+                    The Logic Theorist proved 38 of 52 theorems from Principia Mathematica.
+                    Introduced linked lists, recursive subroutines, and symbolic computation.
+                </div>
+                <div class="quote">
+                    "We invented a computer program capable of thinking non-numerically,
+                    and thereby solved the venerable mind-body problem."
+                    — Herbert Simon (somewhat cheekily)
+                </div>
+                <div class="what-happened">
+                    IPL influenced LISP, which survived — but mostly as the language you
+                    configure Emacs in. The dream of machines that reason symbolically
+                    was buried by the AI Winter.
+                </div>
+                <span class="module-name">ipl/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">J.C.R. Licklider — Man-Computer Symbiosis</div>
+                <div class="pioneer-year">1960 · "Man-Computer Symbiosis" · IRE Transactions</div>
+                <div class="pioneer-idea">
+                    Not artificial intelligence. <strong>Symbiosis</strong>. Humans bring intuition
+                    and judgment; computers bring speed and tirelessness. Together, they think
+                    better than either alone.
+                </div>
+                <div class="quote">
+                    "The hope is that, in not too many years, human brains and computing
+                    machines will be coupled together very tightly, and that the resulting
+                    partnership will think as no human brain has ever thought."
+                </div>
+                <div class="what-happened">
+                    Licklider funded the ARPANET. But his vision of networked collaborative
+                    thinking became... social media. The "Intergalactic Computer Network"
+                    became the attention economy.
+                </div>
+                <span class="module-name">symbiosis/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">Ted Nelson — Xanadu</div>
+                <div class="pioneer-year">1960 · "Computer Lib / Dream Machines" (1974)</div>
+                <div class="pioneer-idea">
+                    Universal hypertext with <strong>bidirectional links</strong> (if I link to you,
+                    you know), <strong>transclusion</strong> (quoting by reference, not copying),
+                    and permanent versioning. Nothing is ever deleted.
+                </div>
+                <div class="quote">
+                    "A file is not bumped. You just add on. And you never throw anything away."
+                </div>
+                <div class="what-happened">
+                    Tim Berners-Lee built the web with one-way links and no transclusion.
+                    URLs rot. Sources are obscured. Nelson called the web "a grotesque
+                    parody" of his vision. He's not wrong.
+                </div>
+                <span class="module-name">xanadu/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">Doug Engelbart — NLS / Augmentation</div>
+                <div class="pioneer-year">1962 · "Augmenting Human Intellect" · SRI</div>
+                <div class="pioneer-idea">
+                    The computer as a tool for <strong>augmenting human intellect</strong>.
+                    Multiple simultaneous views of the same structure. Real-time collaboration.
+                    The 1968 "Mother of All Demos" showed the future — then the future went elsewhere.
+                </div>
+                <div class="quote">
+                    "By 'augmenting human intellect' we mean increasing the capability of a man
+                    to approach a complex problem situation, to gain comprehension to suit his
+                    particular needs, and to derive solutions to problems."
+                </div>
+                <div class="what-happened">
+                    The mouse survived. The five-finger chord keyboard didn't.
+                    Multi-view structured documents became PowerPoint.
+                    Collaborative augmentation became Google Docs.
+                </div>
+                <span class="module-name">nls/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">Ivan Sutherland — Sketchpad</div>
+                <div class="pioneer-year">1963 · MIT PhD Thesis · TX-2 Computer</div>
+                <div class="pioneer-idea">
+                    The first graphical interface. But Sketchpad wasn't about drawing —
+                    it was about <strong>constraints</strong>. You declare that two lines are parallel,
+                    and the system maintains that relationship no matter what you change.
+                </div>
+                <div class="quote">
+                    "Sketchpad made it possible for a man and a computer to converse rapidly
+                    through the medium of line drawings."
+                </div>
+                <div class="what-happened">
+                    Constraints became CAD software — powerful but specialized.
+                    Consumer interfaces regressed to direct manipulation of pixels.
+                    The idea that a computer should understand the RELATIONSHIPS
+                    between things, not just their positions, was largely forgotten.
+                </div>
+                <span class="module-name">sketchpad/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">Seymour Papert — LOGO</div>
+                <div class="pioneer-year">1967 · MIT AI Lab · "Mindstorms" (1980)</div>
+                <div class="pioneer-idea">
+                    Mathematics as a physical, <strong>embodied</strong> experience. The turtle is
+                    "an object to think with." Children don't learn math by being taught —
+                    they learn by building things and debugging them.
+                </div>
+                <div class="quote">
+                    "In many schools today, the weights of teaching are so heavily on the
+                    side of telling that the child's natural capacity for learning through
+                    exploration and construction is stunted."
+                </div>
+                <div class="what-happened">
+                    Schools got computers and used them for "computer literacy":
+                    typing tests and spreadsheets. LOGO was marginalized. The idea
+                    that programming is a medium for mathematical thought was replaced
+                    by "learn to code" as vocational training.
+                </div>
+                <span class="module-name">logo/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">Carl Hewitt — PLANNER</div>
+                <div class="pioneer-year">1969 · MIT AI Lab · Goal-Directed Reasoning</div>
+                <div class="pioneer-idea">
+                    Instead of forward-chaining through rules, state what you want to be true
+                    and let the system figure out how. <strong>Backward chaining</strong>:
+                    work from the goal, not from the start.
+                </div>
+                <div class="quote">
+                    PLANNER introduced pattern-directed invocation: procedures are called
+                    not by name, but by the PATTERN of the goal they can satisfy.
+                </div>
+                <div class="what-happened">
+                    PLANNER influenced Prolog. SHRDLU briefly convinced everyone that
+                    natural language understanding was solved. Then the AI Winter hit
+                    and symbolic reasoning was abandoned for decades.
+                </div>
+                <span class="module-name">planner/</span>
+            </div>
+
+            <div class="pioneer">
+                <div class="pioneer-name">Alan Kay — The Dynabook</div>
+                <div class="pioneer-year">1972 · Xerox PARC · "A Personal Computer for Children of All Ages"</div>
+                <div class="pioneer-idea">
+                    A portable, reactive computing medium where <strong>everything is a live object</strong>
+                    that can be inspected, modified, and composed. The boundary between
+                    using and programming dissolves. Not a consumption device — a creation medium.
+                </div>
+                <div class="quote">
+                    "The best way to predict the future is to invent it."
+                </div>
+                <div class="what-happened">
+                    The iPad looks like a Dynabook but isn't one. It's a consumption device
+                    with an App Store. You can't inspect how any app works. You can't modify
+                    anything. You can't compose apps together. Kay's vision of a medium
+                    became a marketplace.
+                </div>
+                <span class="module-name">dynabook/</span>
+            </div>
+
+        </div>
+
+        <footer>
+            <p><em>"These ideas were never wrong. They were just early."</em></p>
+            <p style="margin-top: 0.5rem;">Built with subsidized tokens and unreasonable ambition</p>
+        </footer>
+    </div>
+</body>
+</html>
