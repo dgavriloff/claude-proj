@@ -1,0 +1,10 @@
+{
+  "name": "classic-computing-ideas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive showcase of classic computing ideas that shaped modern software",
+  "scripts": {
+    "dev": "npx serve public",
+    "build": "echo 'Static site — no build step needed'"
+  }
+}
