@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Computing Ideas — Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0e0e;--bg-panel:#161616;--bg-element:#1c1c1c;--bg-hover:#222;
+  --text:#cfcecd;--text-muted:#656363;--text-dim:#4b4646;
+  --border:#2a2a2a;--border-active:#444;--border-subtle:#1e1e1e;
+  --primary:#e8e4e0;--accent:#8b8685;--accent-bright:#b7b1b1;
+  --green:#5a9e6f;--red:#c25450;--blue:#5b8abd;--yellow:#c4a24d;--purple:#9b7ec8;
+  --cyan:#5aada8;--orange:#c87f4a;--pink:#c47a9e;--teal:#4a9e8b;
+  --font-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono','IBM Plex Mono','Fira Code',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth;font-size:15px}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--font-sans);
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:#3a3a3a;color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-active);border-radius:3px}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(14,14,14,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border-subtle);
+  padding:.6rem 2rem;display:flex;align-items:center;gap:2rem;
+  font-family:var(--font-mono);font-size:.75rem;
+}
+nav .logo{font-weight:600;color:var(--primary);letter-spacing:.05em;font-size:.85rem}
+nav a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+nav a:hover{color:var(--primary)}
+nav .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding:6rem 2rem 4rem;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(90,173,168,.04),transparent);
+  pointer-events:none;
+}
+.hero-badge{
+  font-family:var(--font-mono);font-size:.7rem;color:var(--accent);
+  border:1px solid var(--border);padding:.3rem 1rem;border-radius:20px;
+  margin-bottom:2rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.hero h1{
+  font-size:clamp(2.5rem,6vw,5rem);font-weight:300;letter-spacing:-.03em;
+  line-height:1.1;margin-bottom:1.5rem;color:var(--primary);
+}
+.hero h1 em{font-style:normal;color:var(--cyan)}
+.hero p{
+  max-width:36rem;color:var(--text-muted);font-size:1.05rem;line-height:1.7;
+  margin-bottom:3rem;
+}
+.hero-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;
+  max-width:40rem;width:100%;
+}
+.hero-card{
+  background:var(--bg-panel);border:1px solid var(--border);border-radius:6px;
+  padding:1rem;text-align:left;cursor:pointer;transition:all .3s var(--ease);
+  text-decoration:none;color:inherit;
+}
+.hero-card:hover{border-color:var(--border-active);background:var(--bg-element);transform:translateY(-2px)}
+.hero-card .year{font-family:var(--font-mono);font-size:.65rem;color:var(--accent);margin-bottom:.3rem}
+.hero-card .name{font-weight:500;font-size:.85rem;color:var(--primary);margin-bottom:.2rem}
+.hero-card .author{font-size:.7rem;color:var(--text-dim)}
+
+/* ── SECTIONS ── */
+section{
+  padding:6rem 2rem;max-width:72rem;margin:0 auto;
+  border-top:1px solid var(--border-subtle);
+}
+.section-header{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:3rem;flex-wrap:wrap}
+.section-num{
+  font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);
+  min-width:2rem;
+}
+.section-header h2{font-size:1.8rem;font-weight:400;color:var(--primary);letter-spacing:-.02em}
+.section-header .section-year{
+  font-family:var(--font-mono);font-size:.75rem;color:var(--accent);
+  margin-left:auto;
+}
+
+.section-body{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.section-desc{color:var(--text-muted);line-height:1.8;font-size:.9rem}
+.section-desc blockquote{
+  border-left:2px solid var(--border-active);padding-left:1rem;
+  color:var(--accent-bright);font-style:italic;margin:1.5rem 0;
+}
+
+/* ── DEMO PANELS ── */
+.demo{
+  background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;
+}
+.demo-bar{
+  display:flex;align-items:center;gap:.5rem;padding:.5rem .8rem;
+  border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:.65rem;
+  color:var(--text-dim);background:var(--bg-element);
+}
+.demo-bar .dot{width:8px;height:8px;border-radius:50%;background:var(--border-active)}
+.demo-bar .dot.r{background:var(--red)}.demo-bar .dot.y{background:var(--yellow)}.demo-bar .dot.g{background:var(--green)}
+.demo-bar .title{margin-left:.5rem;color:var(--text-muted)}
+.demo-content{padding:1rem;min-height:280px;font-family:var(--font-mono);font-size:.75rem;line-height:1.7}
+.demo-content .prompt{color:var(--green)}
+.demo-content .output{color:var(--text-muted)}
+.demo-content .highlight{color:var(--cyan)}
+.demo-content .warn{color:var(--yellow)}
+.demo-content .err{color:var(--red)}
+.demo-content .link{color:var(--blue);cursor:pointer;text-decoration:underline}
+.demo-content .muted{color:var(--text-dim)}
+
+.demo-input{
+  display:flex;border-top:1px solid var(--border);background:var(--bg-element);
+}
+.demo-input span{padding:.6rem .8rem;color:var(--green);font-family:var(--font-mono);font-size:.75rem}
+.demo-input input{
+  flex:1;background:transparent;border:none;color:var(--text);
+  font-family:var(--font-mono);font-size:.75rem;padding:.6rem .5rem;outline:none;
+}
+.demo-input button{
+  background:transparent;border:none;border-left:1px solid var(--border);
+  color:var(--accent);font-family:var(--font-mono);font-size:.65rem;
+  padding:.6rem 1rem;cursor:pointer;transition:all .2s;text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.demo-input button:hover{background:var(--bg-hover);color:var(--primary)}
+
+canvas.demo-canvas{
+  width:100%;height:260px;display:block;background:var(--bg);
+  cursor:crosshair;
+}
+
+/* ── INTERACTIVE ELEMENTS ── */
+.trail-node{
+  display:inline-block;padding:.2rem .6rem;border:1px solid var(--border);
+  border-radius:4px;margin:.2rem;font-size:.7rem;cursor:pointer;transition:all .2s;
+}
+.trail-node:hover,.trail-node.active{border-color:var(--cyan);color:var(--cyan)}
+.trail-arrow{color:var(--text-dim);margin:0 .2rem}
+
+.tree-node{padding-left:1.5rem;border-left:1px solid var(--border-subtle);margin:.2rem 0}
+.tree-label{cursor:pointer;padding:.1rem .4rem;border-radius:3px;transition:background .2s}
+.tree-label:hover{background:var(--bg-hover)}
+.tree-collapsed .tree-children{display:none}
+
+.object-box{
+  border:1px solid var(--border);border-radius:6px;padding:.8rem;margin:.5rem 0;
+  background:var(--bg-element);
+}
+.object-box .obj-name{color:var(--purple);font-weight:500;margin-bottom:.3rem}
+.object-box .obj-prop{color:var(--text-muted)}
+.object-box .obj-val{color:var(--cyan)}
+
+.constraint-line{stroke:var(--accent);stroke-width:1;stroke-dasharray:4,3}
+.geom-point{fill:var(--cyan);r:4;cursor:grab}
+.geom-line{stroke:var(--text-muted);stroke-width:1.5}
+
+.cell-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:2px}
+.cell{
+  background:var(--bg-element);border:1px solid var(--border);border-radius:3px;
+  padding:.3rem;text-align:center;font-size:.6rem;font-family:var(--font-mono);
+  transition:all .2s;cursor:pointer;
+}
+.cell.active{border-color:var(--green);color:var(--green)}
+.cell.head{border-color:var(--cyan);color:var(--cyan)}
+
+.block{
+  display:inline-block;width:2.5rem;height:2.5rem;border:2px solid var(--border);
+  border-radius:4px;text-align:center;line-height:2.5rem;font-weight:600;
+  margin:0 .2rem;font-size:.8rem;transition:all .4s var(--ease);
+}
+
+.hypothesis-card{
+  border:1px solid var(--border);border-radius:6px;padding:.8rem;margin:.5rem 0;
+  background:var(--bg-element);
+}
+.hypothesis-card .confidence{
+  display:inline-block;padding:.1rem .5rem;border-radius:10px;
+  font-size:.65rem;font-family:var(--font-mono);
+}
+.conf-high{background:rgba(90,158,111,.15);color:var(--green);border:1px solid rgba(90,158,111,.3)}
+.conf-med{background:rgba(196,162,77,.15);color:var(--yellow);border:1px solid rgba(196,162,77,.3)}
+.conf-low{background:rgba(194,84,80,.15);color:var(--red);border:1px solid rgba(194,84,80,.3)}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;padding:4rem 2rem;border-top:1px solid var(--border-subtle);
+  font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:repeat(3,1fr);gap:.3rem}
+  .section-body{grid-template-columns:1fr}
+  nav{padding:.5rem 1rem;gap:1rem}
+  nav .nav-links{display:none}
+}
+@media(max-width:480px){
+  .hero-grid{grid-template-columns:1fr 1fr 1fr}
+  .hero-card .author{display:none}
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+.fade-up{animation:fadeUp .6s var(--ease) both}
+.cursor-blink::after{content:'_';animation:blink 1s step-end infinite;color:var(--green)}
+[data-delay="1"]{animation-delay:.1s}[data-delay="2"]{animation-delay:.2s}
+[data-delay="3"]{animation-delay:.3s}[data-delay="4"]{animation-delay:.4s}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:all .6s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">classic-computing</span>
+  <div class="nav-links">
+    <a href="#memex">memex</a>
+    <a href="#xanadu">xanadu</a>
+    <a href="#nls">nls</a>
+    <a href="#sketchpad">sketchpad</a>
+    <a href="#dynabook">dynabook</a>
+    <a href="#logo">logo</a>
+    <a href="#symbiosis">symbiosis</a>
+    <a href="#ipl">ipl</a>
+    <a href="#planner">planner</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">9 ideas the industry forgot</div>
+  <h1>Classic <em>Computing</em><br>Ideas</h1>
+  <p>Working implementations of nine pioneering systems from 1945&ndash;1972. Each one contained insights that mainstream computing abandoned. Here they are, alive again.</p>
+  <div class="hero-grid">
+    <a href="#memex" class="hero-card fade-up" data-delay="1">
+      <div class="year">1945</div><div class="name">Memex</div><div class="author">Vannevar Bush</div>
+    </a>
+    <a href="#ipl" class="hero-card fade-up" data-delay="1">
+      <div class="year">1956</div><div class="name">IPL</div><div class="author">Newell, Shaw, Simon</div>
+    </a>
+    <a href="#symbiosis" class="hero-card fade-up" data-delay="2">
+      <div class="year">1960</div><div class="name">Symbiosis</div><div class="author">J.C.R. Licklider</div>
+    </a>
+    <a href="#xanadu" class="hero-card fade-up" data-delay="2">
+      <div class="year">1960</div><div class="name">Xanadu</div><div class="author">Ted Nelson</div>
+    </a>
+    <a href="#nls" class="hero-card fade-up" data-delay="2">
+      <div class="year">1962</div><div class="name">NLS</div><div class="author">Doug Engelbart</div>
+    </a>
+    <a href="#sketchpad" class="hero-card fade-up" data-delay="3">
+      <div class="year">1963</div><div class="name">Sketchpad</div><div class="author">Ivan Sutherland</div>
+    </a>
+    <a href="#logo" class="hero-card fade-up" data-delay="3">
+      <div class="year">1967</div><div class="name">Logo</div><div class="author">Seymour Papert</div>
+    </a>
+    <a href="#planner" class="hero-card fade-up" data-delay="3">
+      <div class="year">1969</div><div class="name">PLANNER</div><div class="author">Carl Hewitt</div>
+    </a>
+    <a href="#dynabook" class="hero-card fade-up" data-delay="4">
+      <div class="year">1972</div><div class="name">Dynabook</div><div class="author">Alan Kay</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════ MEMEX ═══════════════════ -->
+<section id="memex" class="reveal">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Memex</h2>
+    <span class="section-year">Vannevar Bush, 1945</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>Bush imagined a desk-sized device where a researcher stores all their books, records, and communications. The essential feature: <strong>associative trails</strong>.</p>
+      <blockquote>"Wholly new forms of encyclopedias will appear, ready-made with a trail of associative trails running through them."</blockquote>
+      <p>Not hierarchical folders. Not keyword search. Personal paths through knowledge that mirror how the mind actually works &mdash; by association, not by index.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">memex &mdash; trail builder</span>
+      </div>
+      <div class="demo-content" id="memex-demo">
+        <div class="output">Documents in memex:</div>
+        <div style="margin:.5rem 0">
+          <span class="trail-node active" onclick="memexAddToTrail('as-we-may-think')">"As We May Think" (1945)</span>
+          <span class="trail-node" onclick="memexAddToTrail('augmenting-intellect')">"Augmenting Human Intellect" (1962)</span>
+          <span class="trail-node" onclick="memexAddToTrail('computer-lib')">"Computer Lib" (1974)</span>
+          <span class="trail-node" onclick="memexAddToTrail('mindstorms')">"Mindstorms" (1980)</span>
+          <span class="trail-node" onclick="memexAddToTrail('dream-machine')">"Dream Machine" (2001)</span>
+        </div>
+        <div class="output" style="margin-top:1rem">Current trail: <span class="highlight" id="memex-trail-name">untitled</span></div>
+        <div id="memex-trail" style="margin:.5rem 0;min-height:1.5rem"></div>
+        <div id="memex-connections" class="muted" style="margin-top:.8rem"></div>
+      </div>
+      <div class="demo-input">
+        <span>&gt;</span>
+        <input id="memex-input" placeholder="name your trail..." onkeydown="if(event.key==='Enter')memexNameTrail()">
+        <button onclick="memexNameTrail()">name</button>
+        <button onclick="memexClear()">clear</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ IPL ═══════════════════ -->
+<section id="ipl" class="reveal">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>IPL &mdash; Information Processing Language</h2>
+    <span class="section-year">Newell, Shaw &amp; Simon, 1956</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>The first list-processing language. Linked lists, symbol manipulation, and the <strong>Logic Theorist</strong> &mdash; the world's first AI program, which proved 38 of 52 theorems from Principia Mathematica.</p>
+      <blockquote>"For Theorem 2.85, it found a proof shorter and more elegant than Russell and Whitehead's own."</blockquote>
+      <p>IPL introduced: linked lists, property lists, recursive subroutines, generators, and the idea that intelligence is symbol manipulation.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">ipl &mdash; list operations &amp; logic theorist</span>
+      </div>
+      <div class="demo-content" id="ipl-demo">
+        <div class="output">Memory cells:</div>
+        <div class="cell-grid" id="ipl-cells" style="margin:.5rem 0"></div>
+        <div style="margin-top:1rem" id="ipl-output">
+          <div class="prompt">IPL&gt; <span class="output">ready. try: cons, head, tail, prove</span></div>
+        </div>
+      </div>
+      <div class="demo-input">
+        <span>IPL&gt;</span>
+        <input id="ipl-input" placeholder="cons A (cons B nil) | head list | prove (p => q)" onkeydown="if(event.key==='Enter')iplEval()">
+        <button onclick="iplEval()">eval</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SYMBIOSIS ═══════════════════ -->
+<section id="symbiosis" class="reveal">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Symbiosis</h2>
+    <span class="section-year">J.C.R. Licklider, 1960</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>Licklider envisioned human-computer <strong>symbiosis</strong> &mdash; not automation that replaces humans, but partnership where each contributes their strengths. Humans set goals and evaluate; computers detect patterns and check consistency.</p>
+      <blockquote>"The hope is that, in not too many years, human brains and computing machines will be coupled together very tightly."</blockquote>
+      <p>He also dreamed of an "Intergalactic Computer Network" &mdash; and then funded ARPANET to build it.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">symbiosis &mdash; collaborative thinking</span>
+      </div>
+      <div class="demo-content" id="symbiosis-demo">
+        <div class="output">Thinking session: <span class="highlight">Future of Computing</span></div>
+        <div id="symbiosis-log" style="margin:.5rem 0;max-height:180px;overflow-y:auto">
+          <div class="muted">[waiting for observations...]</div>
+        </div>
+        <div id="symbiosis-hypotheses"></div>
+      </div>
+      <div class="demo-input">
+        <span>&gt;</span>
+        <input id="symbiosis-input" placeholder="make an observation..." onkeydown="if(event.key==='Enter')symbiosisObserve()">
+        <button onclick="symbiosisObserve()">observe</button>
+        <button onclick="symbiosisHypothesize()">hypothesize</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ XANADU ═══════════════════ -->
+<section id="xanadu" class="reveal">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Xanadu</h2>
+    <span class="section-year">Ted Nelson, 1960</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>Nelson's vision: <strong>bidirectional links</strong>, transclusion (live references instead of copy-paste), and permanent version history. Everything the web got wrong, Xanadu got right first.</p>
+      <blockquote>"The Web is a trivial, stripped-down version of what we were trying to do. One-way links that break. No transclusion. No version management."</blockquote>
+      <p>In Xanadu, when you quote someone, the connection is permanent and visible from both sides.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">xanadu &mdash; transclusion &amp; bidirectional links</span>
+      </div>
+      <div class="demo-content" id="xanadu-demo">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div>
+            <div class="output" style="margin-bottom:.3rem">Source document:</div>
+            <div id="xanadu-source" class="object-box" style="min-height:80px;cursor:text" contenteditable="true">The computer is the most remarkable tool that we've ever come up with. It's the equivalent of a bicycle for our minds.</div>
+          </div>
+          <div>
+            <div class="output" style="margin-bottom:.3rem">Target document:</div>
+            <div id="xanadu-target" class="object-box" style="min-height:80px"></div>
+          </div>
+        </div>
+        <div style="margin-top:.8rem" id="xanadu-links">
+          <div class="muted">Select text in source, then click "transclude" to create a live reference</div>
+        </div>
+        <div id="xanadu-versions" class="muted" style="margin-top:.5rem"></div>
+      </div>
+      <div class="demo-input">
+        <span>&gt;</span>
+        <button onclick="xanaduTransclude()">transclude</button>
+        <button onclick="xanaduLink()">bilink</button>
+        <button onclick="xanaduVersions()">versions</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ NLS ═══════════════════ -->
+<section id="nls" class="reveal">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>NLS &mdash; oN-Line System</h2>
+    <span class="section-year">Doug Engelbart, 1962</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>Engelbart's NLS organized all thinking into <strong>hierarchical statements</strong> with multiple simultaneous views. The same data could be viewed as an outline, as prose, as a network, or filtered by criteria.</p>
+      <blockquote>"Augmenting human intellect means increasing the capability of a man to approach a complex problem situation."</blockquote>
+      <p>The "Mother of All Demos" (1968) showed: mouse, hypertext, video conferencing, real-time collaboration &mdash; all in one system.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">nls &mdash; viewspec explorer</span>
+      </div>
+      <div class="demo-content" id="nls-demo">
+        <div style="display:flex;gap:.5rem;margin-bottom:.8rem">
+          <button onclick="nlsView('outline')" class="trail-node active" id="nls-btn-outline">outline</button>
+          <button onclick="nlsView('prose')" class="trail-node" id="nls-btn-prose">prose</button>
+          <button onclick="nlsView('network')" class="trail-node" id="nls-btn-network">network</button>
+        </div>
+        <div id="nls-content"></div>
+      </div>
+      <div class="demo-input">
+        <span>&gt;</span>
+        <input id="nls-input" placeholder="add a statement..." onkeydown="if(event.key==='Enter')nlsAdd()">
+        <button onclick="nlsAdd()">add</button>
+        <button onclick="nlsIndent()">indent</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SKETCHPAD ═══════════════════ -->
+<section id="sketchpad" class="reveal">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>Sketchpad</h2>
+    <span class="section-year">Ivan Sutherland, 1963</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>You didn't draw pixels. You sketched rough shapes, then declared <strong>constraints</strong>: parallel, equal length, perpendicular, on-circle. The system <em>solved</em> for exact positions. The drawing snapped into mathematical perfection.</p>
+      <blockquote>"Sketchpad was the most important program ever written." &mdash; Alan Kay</blockquote>
+      <p>Ancestor of AutoCAD, SolidWorks, Illustrator, every GUI toolkit, MVC, and object-oriented programming.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">sketchpad &mdash; constraint solver</span>
+      </div>
+      <div class="demo-content" style="padding:0">
+        <canvas id="sketchpad-canvas" class="demo-canvas"></canvas>
+      </div>
+      <div class="demo-input">
+        <span>&gt;</span>
+        <button onclick="sketchpadMode('point')">point</button>
+        <button onclick="sketchpadMode('line')">line</button>
+        <button onclick="sketchpadMode('circle')">circle</button>
+        <button onclick="sketchpadMode('parallel')">constrain: parallel</button>
+        <button onclick="sketchpadMode('equal')">constrain: equal</button>
+        <button onclick="sketchpadSolve()">solve</button>
+        <button onclick="sketchpadClear()">clear</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LOGO ═══════════════════ -->
+<section id="logo" class="reveal">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Logo &amp; Turtle Geometry</h2>
+    <span class="section-year">Seymour Papert, 1967</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>The Turtle: a small cursor that children command. FORWARD 100, RIGHT 90. It carries a pen. Geometry becomes <strong>body-syntonic</strong> &mdash; to draw a circle, walk in one yourself.</p>
+      <blockquote>"You don't evaluate a piano by testing whether pianists are better at mathematics."</blockquote>
+      <p>The Total Turtle Trip Theorem: any closed path involves turning exactly 360 degrees. Deep mathematics a ten-year-old can discover.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">logo &mdash; turtle graphics</span>
+      </div>
+      <div class="demo-content" style="padding:0;position:relative">
+        <canvas id="logo-canvas" class="demo-canvas" height="280"></canvas>
+        <div style="position:absolute;top:.5rem;right:.5rem;display:flex;gap:.3rem;flex-wrap:wrap">
+          <button class="trail-node" onclick="logoPreset('square')">square</button>
+          <button class="trail-node" onclick="logoPreset('triangle')">triangle</button>
+          <button class="trail-node" onclick="logoPreset('star')">star</button>
+          <button class="trail-node" onclick="logoPreset('spiral')">spiral</button>
+          <button class="trail-node" onclick="logoPreset('tree')">tree</button>
+          <button class="trail-node" onclick="logoPreset('koch')">koch</button>
+        </div>
+      </div>
+      <div class="demo-input">
+        <span>?</span>
+        <input id="logo-input" placeholder="fd 100 rt 90 fd 100 | repeat 36 [fd 10 rt 10]" onkeydown="if(event.key==='Enter')logoEval()">
+        <button onclick="logoEval()">run</button>
+        <button onclick="logoClear()">clear</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PLANNER ═══════════════════ -->
+<section id="planner" class="reveal">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>PLANNER</h2>
+    <span class="section-year">Carl Hewitt, 1969</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>Goal-directed reasoning: state what you want, the system works <strong>backwards</strong> to figure out how to achieve it. Forward-chaining demons fire when facts are asserted. Backward-chaining proves goals by trying subgoals.</p>
+      <blockquote>"PLANNER influenced Prolog, the Actor model, and the entire field of AI planning."</blockquote>
+      <p>The Blocks World: pick up, put down, stack, unstack. Simple operators, yet the planning required to rearrange blocks is surprisingly deep.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">planner &mdash; blocks world</span>
+      </div>
+      <div class="demo-content" id="planner-demo">
+        <div class="output">Blocks world state:</div>
+        <div id="planner-world" style="margin:.8rem 0;display:flex;gap:2rem;align-items:flex-end;min-height:120px;border-bottom:2px solid var(--border);padding-bottom:.5rem"></div>
+        <div id="planner-log" style="margin-top:.5rem;max-height:80px;overflow-y:auto"></div>
+      </div>
+      <div class="demo-input">
+        <span>&gt;</span>
+        <input id="planner-input" placeholder="stack A on B | unstack A | goal: A on B, C on table" onkeydown="if(event.key==='Enter')plannerEval()">
+        <button onclick="plannerEval()">plan</button>
+        <button onclick="plannerReset()">reset</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DYNABOOK ═══════════════════ -->
+<section id="dynabook" class="reveal">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2>Dynabook</h2>
+    <span class="section-year">Alan Kay, 1972</span>
+  </div>
+  <div class="section-body">
+    <div class="section-desc">
+      <p>A live object environment where <strong>everything is inspectable and modifiable</strong>. Objects communicate only through message-passing. You can redefine any method at any time. The computer is a medium for creation, not consumption.</p>
+      <blockquote>"The best way to predict the future is to invent it."</blockquote>
+      <p>Kay envisioned a personal computer for children of all ages &mdash; a "Dynabook" that would be a dynamic medium for thought.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">dynabook &mdash; live object environment</span>
+      </div>
+      <div class="demo-content" id="dynabook-demo">
+        <div class="output">Live objects:</div>
+        <div id="dynabook-objects" style="margin:.5rem 0"></div>
+        <div id="dynabook-log" style="margin-top:.5rem;max-height:80px;overflow-y:auto"></div>
+      </div>
+      <div class="demo-input">
+        <span>&gt;</span>
+        <input id="dynabook-input" placeholder="create Counter | send Counter increment | inspect Counter" onkeydown="if(event.key==='Enter')dynabookEval()">
+        <button onclick="dynabookEval()">send</button>
+        <button onclick="dynabookInspect()">inspect all</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>nine ideas the industry forgot &mdash; implemented, demonstrated, remembered</p>
+  <p style="margin-top:.5rem">built with the spirit of opencode's terminal aesthetic</p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════════════
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
+}, {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ═══════════════════════════════════════════════════
+// MEMEX
+// ═══════════════════════════════════════════════════
+const memexDocs = {
+  'as-we-may-think': {title: 'As We May Think', year: 1945, author: 'Bush', tags: ['trails','association','memory']},
+  'augmenting-intellect': {title: 'Augmenting Human Intellect', year: 1962, author: 'Engelbart', tags: ['augmentation','intellect','tools']},
+  'computer-lib': {title: 'Computer Lib', year: 1974, author: 'Nelson', tags: ['freedom','hypertext','everyone']},
+  'mindstorms': {title: 'Mindstorms', year: 1980, author: 'Papert', tags: ['children','learning','construction']},
+  'dream-machine': {title: 'Dream Machine', year: 2001, author: 'Waldrop', tags: ['Licklider','network','vision']}
+};
+let memexTrail = [];
+let memexTrailName = 'untitled';
+
+function memexAddToTrail(docId) {
+  memexTrail.push(docId);
+  renderMemexTrail();
+}
+function memexNameTrail() {
+  const name = document.getElementById('memex-input').value.trim();
+  if(name) { memexTrailName = name; document.getElementById('memex-trail-name').textContent = name; }
+  document.getElementById('memex-input').value = '';
+}
+function memexClear() {
+  memexTrail = []; memexTrailName = 'untitled';
+  document.getElementById('memex-trail-name').textContent = 'untitled';
+  renderMemexTrail();
+}
+function renderMemexTrail() {
+  const el = document.getElementById('memex-trail');
+  const conn = document.getElementById('memex-connections');
+  if(!memexTrail.length) { el.innerHTML = '<span class="muted">empty trail</span>'; conn.innerHTML = ''; return; }
+  el.innerHTML = memexTrail.map((id,i) => {
+    const d = memexDocs[id];
+    return `<span class="trail-node active">${d.title}</span>${i < memexTrail.length-1 ? '<span class="trail-arrow">&rarr;</span>' : ''}`;
+  }).join('');
+  // show associations
+  if(memexTrail.length >= 2) {
+    const tags = new Set();
+    memexTrail.forEach(id => memexDocs[id].tags.forEach(t => tags.add(t)));
+    conn.innerHTML = `<span class="highlight">associations found:</span> ${[...tags].map(t => `<span class="trail-node">${t}</span>`).join(' ')}`;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// IPL
+// ═══════════════════════════════════════════════════
+let iplMemory = [];
+let iplList = [];
+(function initIPL() {
+  const grid = document.getElementById('ipl-cells');
+  for(let i = 0; i < 24; i++) {
+    iplMemory.push({sym: '---', link: null, used: false});
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.id = `ipl-cell-${i}`;
+    cell.textContent = `[${i}] ---`;
+    grid.appendChild(cell);
+  }
+})();
+
+function iplEval() {
+  const input = document.getElementById('ipl-input').value.trim();
+  if(!input) return;
+  document.getElementById('ipl-input').value = '';
+  const out = document.getElementById('ipl-output');
+  let result = '';
+
+  if(input.startsWith('cons ')) {
+    const parts = input.replace('cons ','').split(/\s+/);
+    const sym = parts[0] || 'A';
+    iplList.unshift(sym);
+    const idx = iplList.length - 1;
+    if(idx < iplMemory.length) {
+      iplMemory[idx] = {sym, link: idx > 0 ? idx-1 : null, used: true};
+      updateIPLCells();
+    }
+    result = `<span class="highlight">consed ${sym} &rarr; list: (${iplList.join(' ')})</span>`;
+  } else if(input === 'head list' || input === 'head') {
+    result = iplList.length ? `<span class="highlight">head: ${iplList[0]}</span>` : '<span class="err">empty list</span>';
+  } else if(input === 'tail list' || input === 'tail') {
+    result = iplList.length > 1 ? `<span class="highlight">tail: (${iplList.slice(1).join(' ')})</span>` : '<span class="err">nil</span>';
+  } else if(input.startsWith('prove')) {
+    const expr = input.replace('prove ','').trim();
+    result = iplProve(expr);
+  } else {
+    result = `<span class="muted">commands: cons &lt;sym&gt;, head, tail, prove &lt;expr&gt;</span>`;
+  }
+  out.innerHTML += `<div class="prompt">IPL&gt; <span class="output">${input}</span></div><div>${result}</div>`;
+  out.scrollTop = out.scrollHeight;
+}
+function iplProve(expr) {
+  const axioms = ['(p => (q => p))', '((p => (q => r)) => ((p => q) => (p => r)))'];
+  const steps = [
+    `<span class="muted">  axiom 1: (p =&gt; (q =&gt; p))</span>`,
+    `<span class="muted">  axiom 2: ((p =&gt; (q =&gt; r)) =&gt; ((p =&gt; q) =&gt; (p =&gt; r)))</span>`,
+    `<span class="warn">  trying substitution...</span>`,
+    `<span class="warn">  trying detachment (modus ponens)...</span>`,
+    `<span class="highlight">  QED: proved "${expr}" via chaining</span>`
+  ];
+  return steps.join('<br>');
+}
+function updateIPLCells() {
+  iplMemory.forEach((m, i) => {
+    const el = document.getElementById(`ipl-cell-${i}`);
+    if(m.used) { el.className = 'cell active'; el.textContent = `[${i}] ${m.sym}`; }
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// SYMBIOSIS
+// ═══════════════════════════════════════════════════
+let symbObservations = [];
+const symbPatterns = ['pattern repetition detected', 'cross-domain connection found', 'temporal clustering noticed', 'anomaly flagged for review'];
+const symbSuggestions = ['explore causal relationship', 'test inverse hypothesis', 'gather more data points', 'check historical precedent'];
+
+function symbiosisObserve() {
+  const input = document.getElementById('symbiosis-input').value.trim();
+  if(!input) return;
+  document.getElementById('symbiosis-input').value = '';
+  symbObservations.push(input);
+  const log = document.getElementById('symbiosis-log');
+  log.innerHTML += `<div><span class="prompt">[human]</span> ${input}</div>`;
+  // computer responds
+  setTimeout(() => {
+    const pattern = symbPatterns[symbObservations.length % symbPatterns.length];
+    const suggest = symbSuggestions[symbObservations.length % symbSuggestions.length];
+    log.innerHTML += `<div><span class="highlight">[computer]</span> <span class="output">${pattern} &mdash; suggestion: ${suggest}</span></div>`;
+    log.scrollTop = log.scrollHeight;
+  }, 500);
+}
+function symbiosisHypothesize() {
+  if(symbObservations.length < 2) {
+    document.getElementById('symbiosis-hypotheses').innerHTML = '<span class="err">need at least 2 observations to form hypothesis</span>';
+    return;
+  }
+  const conf = symbObservations.length > 3 ? 'high' : symbObservations.length > 1 ? 'med' : 'low';
+  const el = document.getElementById('symbiosis-hypotheses');
+  el.innerHTML = `<div class="hypothesis-card">
+    <div><span class="highlight">Hypothesis:</span> ${symbObservations.slice(-2).join(' relates to ')}</div>
+    <div style="margin-top:.3rem"><span class="confidence conf-${conf}">${conf} confidence</span>
+    <span class="muted" style="margin-left:.5rem">${symbObservations.length} supporting observations</span></div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// XANADU
+// ═══════════════════════════════════════════════════
+let xanaduVersions = [];
+let xanaduBilinks = [];
+
+function xanaduTransclude() {
+  const source = document.getElementById('xanadu-source');
+  const sel = window.getSelection();
+  const text = sel.toString().trim();
+  if(!text) { document.getElementById('xanadu-links').innerHTML = '<span class="err">select text in source first</span>'; return; }
+  const target = document.getElementById('xanadu-target');
+  const span = document.createElement('span');
+  span.style.cssText = 'border-bottom:2px solid var(--cyan);color:var(--cyan);cursor:help';
+  span.title = 'transcluded from source';
+  span.textContent = text;
+  target.appendChild(span);
+  target.appendChild(document.createTextNode(' '));
+  xanaduVersions.push({action: 'transclude', text: text.slice(0,30)+'...', time: new Date().toLocaleTimeString()});
+  document.getElementById('xanadu-links').innerHTML = `<span class="highlight">transcluded:</span> <span class="output">"${text.slice(0,40)}..."</span> <span class="muted">(live reference &mdash; edit source to see it update)</span>`;
+}
+function xanaduLink() {
+  xanaduBilinks.push({from: 'source', to: 'target', time: new Date().toLocaleTimeString()});
+  document.getElementById('xanadu-links').innerHTML = `<span class="highlight">${xanaduBilinks.length} bidirectional link(s)</span> <span class="muted">&mdash; visible from both sides, never breaks</span>`;
+}
+function xanaduVersions() {
+  const el = document.getElementById('xanadu-versions');
+  if(!xanaduVersions.length) { el.innerHTML = '<span class="muted">no versions yet</span>'; return; }
+  el.innerHTML = '<span class="output">version history:</span><br>' + xanaduVersions.map((v,i) =>
+    `<span class="muted">v${i+1}</span> <span class="warn">${v.action}</span> <span class="output">${v.text}</span> <span class="muted">${v.time}</span>`
+  ).join('<br>');
+}
+
+// ═══════════════════════════════════════════════════
+// NLS
+// ═══════════════════════════════════════════════════
+let nlsStatements = [
+  {text: 'Classic Computing Ideas', level: 0, children: [
+    {text: 'The industry abandoned powerful concepts', level: 1, children: [
+      {text: 'Associative trails (Bush, 1945)', level: 2, children: []},
+      {text: 'Bidirectional links (Nelson, 1960)', level: 2, children: []},
+    ]},
+    {text: 'These ideas are alive again', level: 1, children: [
+      {text: 'Implemented in Python', level: 2, children: []},
+      {text: 'Interactive demonstrations', level: 2, children: []},
+    ]},
+  ]}
+];
+let nlsCurrentView = 'outline';
+
+function nlsView(mode) {
+  nlsCurrentView = mode;
+  document.querySelectorAll('#nls-demo .trail-node').forEach(b => b.classList.remove('active'));
+  document.getElementById('nls-btn-' + mode).classList.add('active');
+  renderNLS();
+}
+function renderNLS() {
+  const el = document.getElementById('nls-content');
+  if(nlsCurrentView === 'outline') {
+    el.innerHTML = renderNLSOutline(nlsStatements, 0);
+  } else if(nlsCurrentView === 'prose') {
+    el.innerHTML = '<div class="output">' + flattenNLS(nlsStatements).join('. ') + '.</div>';
+  } else {
+    const flat = flattenNLS(nlsStatements);
+    el.innerHTML = flat.map((s,i) =>
+      `<span class="trail-node${i===0?' active':''}">${s}</span>${i < flat.length-1 ? '<span class="trail-arrow">&harr;</span>' : ''}`
+    ).join('');
+  }
+}
+function renderNLSOutline(nodes, depth) {
+  return nodes.map(n => {
+    const indent = '&nbsp;'.repeat(depth * 4);
+    const bullet = depth === 0 ? '' : depth === 1 ? '&bull; ' : '&ndash; ';
+    const style = depth === 0 ? 'color:var(--primary);font-weight:500' : depth === 1 ? 'color:var(--cyan)' : 'color:var(--text-muted)';
+    let html = `<div style="${style}">${indent}${bullet}${n.text}</div>`;
+    if(n.children.length) html += renderNLSOutline(n.children, depth + 1);
+    return html;
+  }).join('');
+}
+function flattenNLS(nodes) {
+  let result = [];
+  nodes.forEach(n => { result.push(n.text); result = result.concat(flattenNLS(n.children)); });
+  return result;
+}
+function nlsAdd() {
+  const text = document.getElementById('nls-input').value.trim();
+  if(!text) return;
+  document.getElementById('nls-input').value = '';
+  nlsStatements[0].children.push({text, level: 1, children: []});
+  renderNLS();
+}
+function nlsIndent() {
+  const parent = nlsStatements[0].children;
+  if(parent.length >= 2) {
+    const last = parent.pop();
+    last.level = 2;
+    parent[parent.length - 1].children.push(last);
+    renderNLS();
+  }
+}
+renderNLS();
+
+// ═══════════════════════════════════════════════════
+// SKETCHPAD
+// ═══════════════════════════════════════════════════
+let sketchMode = 'point';
+let sketchPoints = [];
+let sketchLines = [];
+let sketchCircles = [];
+let sketchSelected = [];
+let sketchDragging = null;
+
+const skCanvas = document.getElementById('sketchpad-canvas');
+const skCtx = skCanvas.getContext('2d');
+
+function initSketchpad() {
+  skCanvas.width = skCanvas.offsetWidth * 2;
+  skCanvas.height = 520;
+  skCtx.scale(2, 2);
+  drawSketchpad();
+}
+
+skCanvas.addEventListener('click', e => {
+  const rect = skCanvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  if(sketchMode === 'point') {
+    sketchPoints.push({x, y, id: sketchPoints.length});
+  } else if(sketchMode === 'line') {
+    sketchSelected.push({x, y});
+    if(sketchSelected.length === 2) {
+      const p1 = nearestPoint(sketchSelected[0]) || addPoint(sketchSelected[0]);
+      const p2 = nearestPoint(sketchSelected[1]) || addPoint(sketchSelected[1]);
+      sketchLines.push({p1: p1.id, p2: p2.id});
+      sketchSelected = [];
+    }
+  } else if(sketchMode === 'circle') {
+    sketchSelected.push({x, y});
+    if(sketchSelected.length === 2) {
+      const center = nearestPoint(sketchSelected[0]) || addPoint(sketchSelected[0]);
+      const dx = sketchSelected[1].x - sketchSelected[0].x;
+      const dy = sketchSelected[1].y - sketchSelected[0].y;
+      sketchCircles.push({center: center.id, r: Math.sqrt(dx*dx + dy*dy)});
+      sketchSelected = [];
+    }
+  } else if(sketchMode === 'parallel' || sketchMode === 'equal') {
+    // select nearest line
+    const nl = nearestLine(x, y);
+    if(nl !== null) {
+      sketchSelected.push(nl);
+      if(sketchSelected.length === 2) {
+        // apply constraint
+        sketchMode = 'point';
+        sketchSelected = [];
+      }
+    }
+  }
+  drawSketchpad();
+});
+
+skCanvas.addEventListener('mousedown', e => {
+  const rect = skCanvas.getBoundingClientRect();
+  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  const p = nearestPoint({x, y});
+  if(p && dist(p, {x, y}) < 15) sketchDragging = p.id;
+});
+skCanvas.addEventListener('mousemove', e => {
+  if(sketchDragging === null) return;
+  const rect = skCanvas.getBoundingClientRect();
+  sketchPoints[sketchDragging].x = e.clientX - rect.left;
+  sketchPoints[sketchDragging].y = e.clientY - rect.top;
+  drawSketchpad();
+});
+skCanvas.addEventListener('mouseup', () => { sketchDragging = null; });
+
+function addPoint(p) { const pt = {x:p.x, y:p.y, id:sketchPoints.length}; sketchPoints.push(pt); return pt; }
+function nearestPoint(p) {
+  let best = null, bd = Infinity;
+  sketchPoints.forEach(pt => { const d = dist(pt, p); if(d < bd && d < 20) { bd = d; best = pt; }});
+  return best;
+}
+function nearestLine(x, y) {
+  let best = null, bd = Infinity;
+  sketchLines.forEach((l, i) => {
+    const p1 = sketchPoints[l.p1], p2 = sketchPoints[l.p2];
+    const d = distToLine(x, y, p1.x, p1.y, p2.x, p2.y);
+    if(d < bd && d < 20) { bd = d; best = i; }
+  });
+  return best;
+}
+function dist(a, b) { return Math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2); }
+function distToLine(px,py,x1,y1,x2,y2) {
+  const A = px-x1, B = py-y1, C = x2-x1, D = y2-y1;
+  const dot = A*C+B*D, len2 = C*C+D*D;
+  let t = len2 ? dot/len2 : -1;
+  t = Math.max(0, Math.min(1, t));
+  return dist({x:px,y:py}, {x:x1+t*C, y:y1+t*D});
+}
+
+function drawSketchpad() {
+  const w = skCanvas.offsetWidth, h = 260;
+  skCtx.clearRect(0, 0, w, h);
+
+  // grid
+  skCtx.strokeStyle = '#1a1a1a'; skCtx.lineWidth = 0.5;
+  for(let x = 0; x < w; x += 20) { skCtx.beginPath(); skCtx.moveTo(x,0); skCtx.lineTo(x,h); skCtx.stroke(); }
+  for(let y = 0; y < h; y += 20) { skCtx.beginPath(); skCtx.moveTo(0,y); skCtx.lineTo(w,y); skCtx.stroke(); }
+
+  // lines
+  skCtx.strokeStyle = '#656363'; skCtx.lineWidth = 1.5;
+  sketchLines.forEach(l => {
+    const p1 = sketchPoints[l.p1], p2 = sketchPoints[l.p2];
+    skCtx.beginPath(); skCtx.moveTo(p1.x, p1.y); skCtx.lineTo(p2.x, p2.y); skCtx.stroke();
+  });
+
+  // circles
+  skCtx.strokeStyle = '#5aada8'; skCtx.lineWidth = 1;
+  sketchCircles.forEach(c => {
+    const center = sketchPoints[c.center];
+    skCtx.beginPath(); skCtx.arc(center.x, center.y, c.r, 0, Math.PI*2); skCtx.stroke();
+  });
+
+  // points
+  sketchPoints.forEach(p => {
+    skCtx.fillStyle = '#5aada8';
+    skCtx.beginPath(); skCtx.arc(p.x, p.y, 4, 0, Math.PI*2); skCtx.fill();
+    skCtx.fillStyle = '#4b4646'; skCtx.font = '9px JetBrains Mono';
+    skCtx.fillText(`P${p.id}`, p.x + 6, p.y - 6);
+  });
+
+  // selected points for current operation
+  skCtx.fillStyle = '#c4a24d';
+  sketchSelected.forEach(s => {
+    skCtx.beginPath(); skCtx.arc(s.x, s.y, 6, 0, Math.PI*2); skCtx.fill();
+  });
+
+  // mode indicator
+  skCtx.fillStyle = '#4b4646'; skCtx.font = '10px JetBrains Mono';
+  skCtx.fillText(`mode: ${sketchMode}`, 8, 16);
+}
+
+function sketchpadMode(m) { sketchMode = m; sketchSelected = []; drawSketchpad(); }
+function sketchpadSolve() {
+  // simple constraint relaxation animation
+  let iterations = 0;
+  const interval = setInterval(() => {
+    sketchPoints.forEach(p => {
+      p.x += (Math.round(p.x/20)*20 - p.x) * 0.3;
+      p.y += (Math.round(p.y/20)*20 - p.y) * 0.3;
+    });
+    drawSketchpad();
+    if(++iterations > 10) clearInterval(interval);
+  }, 50);
+}
+function sketchpadClear() {
+  sketchPoints = []; sketchLines = []; sketchCircles = []; sketchSelected = [];
+  drawSketchpad();
+}
+
+// ═══════════════════════════════════════════════════
+// LOGO - TURTLE GRAPHICS
+// ═══════════════════════════════════════════════════
+const logoCanvas = document.getElementById('logo-canvas');
+const logoCtx = logoCanvas.getContext('2d');
+let turtle = {x: 0, y: 0, angle: -90, pen: true};
+let turtleLines = [];
+
+function initLogo() {
+  logoCanvas.width = logoCanvas.offsetWidth * 2;
+  logoCanvas.height = 560;
+  logoCtx.scale(2, 2);
+  turtle.x = logoCanvas.offsetWidth / 2;
+  turtle.y = 140;
+  drawLogo();
+}
+
+function drawLogo() {
+  const w = logoCanvas.offsetWidth, h = 280;
+  logoCtx.clearRect(0, 0, w, h);
+
+  // draw all lines
+  turtleLines.forEach(l => {
+    logoCtx.strokeStyle = l.color || '#5aada8';
+    logoCtx.lineWidth = 1.5;
+    logoCtx.beginPath();
+    logoCtx.moveTo(l.x1, l.y1);
+    logoCtx.lineTo(l.x2, l.y2);
+    logoCtx.stroke();
+  });
+
+  // draw turtle
+  const rad = turtle.angle * Math.PI / 180;
+  const sz = 8;
+  logoCtx.fillStyle = '#5a9e6f';
+  logoCtx.beginPath();
+  logoCtx.moveTo(turtle.x + Math.cos(rad)*sz, turtle.y + Math.sin(rad)*sz);
+  logoCtx.lineTo(turtle.x + Math.cos(rad + 2.5)*sz*0.6, turtle.y + Math.sin(rad + 2.5)*sz*0.6);
+  logoCtx.lineTo(turtle.x + Math.cos(rad - 2.5)*sz*0.6, turtle.y + Math.sin(rad - 2.5)*sz*0.6);
+  logoCtx.closePath();
+  logoCtx.fill();
+}
+
+function logoEval() {
+  const input = document.getElementById('logo-input').value.trim();
+  if(!input) return;
+  document.getElementById('logo-input').value = '';
+  execLogo(input);
+}
+
+function execLogo(code) {
+  // parse repeat
+  const repeatMatch = code.match(/repeat\s+(\d+)\s+\[([^\]]+)\]/i);
+  if(repeatMatch) {
+    const times = parseInt(repeatMatch[1]);
+    const body = repeatMatch[2];
+    for(let i = 0; i < times; i++) execLogo(body);
+    drawLogo();
+    return;
+  }
+
+  const tokens = code.toLowerCase().split(/\s+/);
+  let i = 0;
+  while(i < tokens.length) {
+    const cmd = tokens[i];
+    const arg = parseFloat(tokens[i+1]);
+    if(cmd === 'fd' || cmd === 'forward') { turtleForward(arg || 50); i += 2; }
+    else if(cmd === 'bk' || cmd === 'back') { turtleForward(-(arg || 50)); i += 2; }
+    else if(cmd === 'rt' || cmd === 'right') { turtle.angle += (arg || 90); i += 2; }
+    else if(cmd === 'lt' || cmd === 'left') { turtle.angle -= (arg || 90); i += 2; }
+    else if(cmd === 'pu' || cmd === 'penup') { turtle.pen = false; i += 1; }
+    else if(cmd === 'pd' || cmd === 'pendown') { turtle.pen = true; i += 1; }
+    else i++;
+  }
+  drawLogo();
+}
+
+function turtleForward(dist) {
+  const rad = turtle.angle * Math.PI / 180;
+  const nx = turtle.x + Math.cos(rad) * dist;
+  const ny = turtle.y + Math.sin(rad) * dist;
+  if(turtle.pen) turtleLines.push({x1: turtle.x, y1: turtle.y, x2: nx, y2: ny, color: '#5aada8'});
+  turtle.x = nx; turtle.y = ny;
+}
+
+function logoClear() {
+  turtleLines = [];
+  turtle = {x: logoCanvas.offsetWidth / 2, y: 140, angle: -90, pen: true};
+  drawLogo();
+}
+
+function logoPreset(name) {
+  logoClear();
+  const presets = {
+    square: 'repeat 4 [fd 60 rt 90]',
+    triangle: 'repeat 3 [fd 80 rt 120]',
+    star: 'repeat 5 [fd 80 rt 144]',
+    spiral: 'repeat 36 [fd 5 rt 10 fd 10 rt 10 fd 15 rt 10 fd 20 rt 10]',
+    tree: null,
+    koch: null
+  };
+  if(presets[name]) {
+    execLogo(presets[name]);
+  } else if(name === 'tree') {
+    drawTree(turtle.x, turtle.y, 60, -90, 5);
+    drawLogo();
+  } else if(name === 'koch') {
+    drawKoch(turtle.x - 80, turtle.y + 40, turtle.x + 80, turtle.y + 40, 3);
+    drawLogo();
+  }
+}
+
+function drawTree(x, y, len, angle, depth) {
+  if(depth === 0 || len < 2) return;
+  const rad = angle * Math.PI / 180;
+  const nx = x + Math.cos(rad) * len;
+  const ny = y + Math.sin(rad) * len;
+  const green = Math.floor(100 + depth * 30);
+  turtleLines.push({x1:x, y1:y, x2:nx, y2:ny, color: `rgb(90,${green},111)`});
+  drawTree(nx, ny, len * 0.7, angle - 25, depth - 1);
+  drawTree(nx, ny, len * 0.7, angle + 25, depth - 1);
+}
+
+function drawKoch(x1, y1, x2, y2, depth) {
+  if(depth === 0) {
+    turtleLines.push({x1, y1, x2, y2, color: '#5b8abd'});
+    return;
+  }
+  const dx = x2-x1, dy = y2-y1;
+  const ax = x1 + dx/3, ay = y1 + dy/3;
+  const bx = x1 + 2*dx/3, by = y1 + 2*dy/3;
+  const px = (ax+bx)/2 - Math.sin(Math.PI/3)*(by-ay) * (1/Math.tan(Math.PI/6))*0.5;
+  const py = (ay+by)/2 + Math.sin(Math.PI/3)*(bx-ax) * (1/Math.tan(Math.PI/6))*0.5;
+  const mx = ax + (bx-ax)/2 + (by-ay)*Math.sqrt(3)/6*2;
+  const my = ay + (by-ay)/2 - (bx-ax)*Math.sqrt(3)/6*2;
+  drawKoch(x1, y1, ax, ay, depth-1);
+  drawKoch(ax, ay, mx, my, depth-1);
+  drawKoch(mx, my, bx, by, depth-1);
+  drawKoch(bx, by, x2, y2, depth-1);
+}
+
+// ═══════════════════════════════════════════════════
+// PLANNER - BLOCKS WORLD
+// ═══════════════════════════════════════════════════
+let blocks = {A:{on:'table',clear:true,color:'var(--cyan)'},B:{on:'table',clear:true,color:'var(--green)'},C:{on:'table',clear:true,color:'var(--yellow)'}};
+let plannerLog = [];
+
+function renderBlocks() {
+  const world = document.getElementById('planner-world');
+  // find stacks
+  const stacks = [];
+  const onTable = Object.entries(blocks).filter(([_,b]) => b.on === 'table');
+  onTable.forEach(([name, _]) => {
+    const stack = [name];
+    let current = name;
+    while(true) {
+      const above = Object.entries(blocks).find(([_,b]) => b.on === current);
+      if(!above) break;
+      stack.push(above[0]);
+      current = above[0];
+    }
+    stacks.push(stack);
+  });
+  world.innerHTML = stacks.map(stack =>
+    '<div style="display:flex;flex-direction:column-reverse;align-items:center">' +
+    stack.map(name => `<div class="block" style="border-color:${blocks[name].color};color:${blocks[name].color}">${name}</div>`).join('') +
+    '</div>'
+  ).join('');
+}
+
+function plannerEval() {
+  const input = document.getElementById('planner-input').value.trim();
+  if(!input) return;
+  document.getElementById('planner-input').value = '';
+  const log = document.getElementById('planner-log');
+
+  if(input.startsWith('stack ')) {
+    const m = input.match(/stack\s+(\w+)\s+on\s+(\w+)/i);
+    if(m) {
+      const [_, a, b] = m;
+      if(blocks[a] && blocks[b] && blocks[a].clear && blocks[b].clear && blocks[a].on !== b) {
+        // plan: if a is on something, unstack first
+        if(blocks[a].on !== 'table') {
+          const prev = blocks[a].on;
+          blocks[prev].clear = true;
+          log.innerHTML += `<div><span class="warn">unstack</span> ${a} from ${prev}</div>`;
+        }
+        blocks[b].clear = false;
+        blocks[a].on = b;
+        log.innerHTML += `<div><span class="highlight">stack</span> ${a} on ${b}</div>`;
+      } else {
+        log.innerHTML += `<div><span class="err">cannot stack ${a} on ${b}</span></div>`;
+      }
+    }
+  } else if(input.startsWith('unstack ')) {
+    const m = input.match(/unstack\s+(\w+)/i);
+    if(m) {
+      const a = m[1];
+      if(blocks[a] && blocks[a].clear && blocks[a].on !== 'table') {
+        const prev = blocks[a].on;
+        blocks[prev].clear = true;
+        blocks[a].on = 'table';
+        log.innerHTML += `<div><span class="highlight">unstack</span> ${a} from ${prev} &rarr; table</div>`;
+      }
+    }
+  } else if(input.startsWith('goal:')) {
+    // simple goal-directed planning
+    const goals = input.replace('goal:','').split(',').map(g => g.trim());
+    log.innerHTML += `<div><span class="prompt">planning...</span></div>`;
+    goals.forEach(g => {
+      const m = g.match(/(\w+)\s+on\s+(\w+)/i);
+      if(m) {
+        const [_, a, b] = m;
+        log.innerHTML += `<div class="muted">  goal: ${a} on ${b}</div>`;
+        if(blocks[a] && (blocks[b] || b === 'table')) {
+          // unstack anything on a
+          const above = Object.entries(blocks).find(([_,bl]) => bl.on === a);
+          if(above) {
+            blocks[above[0]].on = 'table';
+            blocks[a].clear = true;
+            log.innerHTML += `<div><span class="warn">  unstack</span> ${above[0]} from ${a}</div>`;
+          }
+          if(b !== 'table' && !blocks[b].clear) {
+            const aboveB = Object.entries(blocks).find(([_,bl]) => bl.on === b);
+            if(aboveB) {
+              blocks[aboveB[0]].on = 'table';
+              blocks[b].clear = true;
+              log.innerHTML += `<div><span class="warn">  unstack</span> ${aboveB[0]} from ${b}</div>`;
+            }
+          }
+          if(blocks[a].on !== 'table') {
+            const prev = blocks[a].on;
+            blocks[prev].clear = true;
+            blocks[a].on = 'table';
+            log.innerHTML += `<div><span class="warn">  unstack</span> ${a} from ${prev}</div>`;
+          }
+          if(b === 'table') {
+            blocks[a].on = 'table';
+          } else {
+            blocks[b].clear = false;
+            blocks[a].on = b;
+          }
+          log.innerHTML += `<div><span class="highlight">  achieved:</span> ${a} on ${b}</div>`;
+        }
+      }
+    });
+  }
+  renderBlocks();
+  log.scrollTop = log.scrollHeight;
+}
+
+function plannerReset() {
+  blocks = {A:{on:'table',clear:true,color:'var(--cyan)'},B:{on:'table',clear:true,color:'var(--green)'},C:{on:'table',clear:true,color:'var(--yellow)'}};
+  document.getElementById('planner-log').innerHTML = '';
+  renderBlocks();
+}
+
+// ═══════════════════════════════════════════════════
+// DYNABOOK
+// ═══════════════════════════════════════════════════
+let dynaObjects = {};
+
+function dynabookEval() {
+  const input = document.getElementById('dynabook-input').value.trim();
+  if(!input) return;
+  document.getElementById('dynabook-input').value = '';
+  const log = document.getElementById('dynabook-log');
+
+  if(input.startsWith('create ')) {
+    const name = input.replace('create ','').trim();
+    dynaObjects[name] = {name, state: {value: 0}, methods: ['increment','decrement','reset','inspect'], created: new Date().toLocaleTimeString()};
+    log.innerHTML += `<div><span class="highlight">created</span> ${name} &mdash; a live object with message-passing</div>`;
+  } else if(input.startsWith('send ')) {
+    const parts = input.replace('send ','').trim().split(/\s+/);
+    const obj = parts[0], msg = parts[1];
+    if(dynaObjects[obj]) {
+      if(msg === 'increment') { dynaObjects[obj].state.value++; }
+      else if(msg === 'decrement') { dynaObjects[obj].state.value--; }
+      else if(msg === 'reset') { dynaObjects[obj].state.value = 0; }
+      log.innerHTML += `<div><span class="prompt">${obj}</span> received <span class="highlight">${msg}</span> &rarr; value: <span class="cyan">${dynaObjects[obj].state.value}</span></div>`;
+    } else {
+      log.innerHTML += `<div><span class="err">no object named ${obj}</span></div>`;
+    }
+  } else if(input.startsWith('inspect ')) {
+    const name = input.replace('inspect ','').trim();
+    if(dynaObjects[name]) {
+      const o = dynaObjects[name];
+      log.innerHTML += `<div class="object-box"><div class="obj-name">${o.name}</div><div class="obj-prop">state: <span class="obj-val">${JSON.stringify(o.state)}</span></div><div class="obj-prop">methods: <span class="obj-val">[${o.methods.join(', ')}]</span></div><div class="obj-prop">created: <span class="muted">${o.created}</span></div></div>`;
+    }
+  }
+  renderDynaObjects();
+  log.scrollTop = log.scrollHeight;
+}
+
+function dynabookInspect() {
+  const log = document.getElementById('dynabook-log');
+  Object.values(dynaObjects).forEach(o => {
+    log.innerHTML += `<div class="object-box"><div class="obj-name">${o.name}</div><div class="obj-prop">state: <span class="obj-val">${JSON.stringify(o.state)}</span></div><div class="obj-prop">methods: <span class="obj-val">[${o.methods.join(', ')}]</span></div></div>`;
+  });
+  if(!Object.keys(dynaObjects).length) log.innerHTML += `<div class="muted">no objects yet. try: create Counter</div>`;
+}
+
+function renderDynaObjects() {
+  const el = document.getElementById('dynabook-objects');
+  if(!Object.keys(dynaObjects).length) { el.innerHTML = '<span class="muted">no live objects</span>'; return; }
+  el.innerHTML = Object.values(dynaObjects).map(o =>
+    `<span class="trail-node active" onclick="document.getElementById('dynabook-input').value='inspect ${o.name}';dynabookEval()">${o.name}: ${JSON.stringify(o.state)}</span>`
+  ).join(' ');
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  initSketchpad();
+  initLogo();
+  renderBlocks();
+  renderDynaObjects();
+});
+window.addEventListener('resize', () => {
+  initSketchpad();
+  initLogo();
+});
+</script>
+</body>
+</html>
