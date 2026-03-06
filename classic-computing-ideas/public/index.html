@@ -221,36 +221,33 @@ footer{
   section{padding:3rem 1rem}
   .section-header{flex-direction:column;gap:.5rem}
   .section-header .section-year{margin-left:0}
-  /* Fix reveal not triggering on mobile anchor navigation */
-  .reveal{opacity:1!important;transform:none!important;transition:none!important}
   section{scroll-margin-top:3rem}
-  /* Fix demo internal layouts */
+  .demo-content{min-height:auto;padding:.8rem;font-size:.7rem}
   .xanadu-grid{grid-template-columns:1fr}
-  /* Fix demo input buttons */
   .demo-input{flex-wrap:wrap}
-  .demo-input button{padding:.6rem .6rem;font-size:.6rem}
-  .demo-input input{min-width:0;width:100%}
-  /* Fix canvas sizing */
-  canvas.demo-canvas{height:200px}
-  /* Fix hero */
+  .demo-input button{padding:.5rem .6rem;font-size:.6rem;border-left:none;border-top:1px solid var(--border)}
+  .demo-input input{min-width:0;width:100%;font-size:16px} /* 16px prevents iOS zoom */
+  .demo-input span{font-size:.7rem;padding:.5rem .6rem}
+  canvas.demo-canvas{height:200px;touch-action:none}
   .hero{padding:5rem 1rem 3rem;min-height:auto}
   .hero h1{font-size:2rem}
   .hero p{font-size:.9rem}
-  /* Fix blocks world overflow */
   #planner-world{gap:1rem;flex-wrap:wrap}
-  /* Fix cell grid for IPL */
   .cell-grid{grid-template-columns:repeat(6,1fr)}
+  .trail-node{font-size:.65rem;padding:.15rem .4rem}
+  .block{width:2rem;height:2rem;line-height:2rem;font-size:.7rem}
 }
 @media(max-width:480px){
-  .hero-grid{grid-template-columns:1fr 1fr 1fr}
+  .hero-grid{grid-template-columns:1fr 1fr;gap:.3rem}
   .hero-card .author{display:none}
   .hero-card{padding:.6rem}
   .hero-card .name{font-size:.75rem}
   section{padding:2rem .8rem}
   .section-header h2{font-size:1.3rem}
+  .section-desc{font-size:.8rem;line-height:1.6}
+  .section-desc blockquote{font-size:.8rem;margin:1rem 0}
   .cell-grid{grid-template-columns:repeat(4,1fr)}
-  .demo-input{gap:.3rem}
-  .demo-input button{padding:.5rem .4rem;font-size:.55rem}
+  canvas.demo-canvas{height:180px}
 }
 
 /* ── ANIMATIONS ── */
@@ -276,9 +273,12 @@ footer{
 .fade-up-text > :nth-child(8){animation-delay:.8s}
 .fade-up-text > :nth-child(9){animation-delay:.9s}
 
-/* scroll reveal */
-.reveal{opacity:0;transform:translateY(30px);transition:all .6s var(--ease)}
+/* scroll reveal — gentle fade only, no hidden-by-default */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .reveal.visible{opacity:1;transform:none}
+/* Fallback: if JS/observer fails, sections must still be visible */
+@media(max-width:768px){.reveal{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -675,10 +675,26 @@ footer{
 // ═══════════════════════════════════════════════════
 // SCROLL REVEAL
 // ═══════════════════════════════════════════════════
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
-}, {threshold: 0.1});
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// Scroll reveal with fallback — sections must never stay hidden
+const revealEls = document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }})
+  }, {threshold: 0.05, rootMargin: '0px 0px 50px 0px'});
+  revealEls.forEach(el => observer.observe(el));
+} else {
+  // No IntersectionObserver — just show everything
+  revealEls.forEach(el => el.classList.add('visible'));
+}
+// When navigating via anchor, reveal the target section immediately
+window.addEventListener('hashchange', () => {
+  const target = document.querySelector(location.hash);
+  if(target) target.classList.add('visible');
+});
+// Also reveal on initial load if hash is present
+if(location.hash) { const t = document.querySelector(location.hash); if(t) t.classList.add('visible'); }
+// Safety net: if any section is still hidden after 2s, force show
+setTimeout(() => revealEls.forEach(el => el.classList.add('visible')), 2000);
 
 // ═══════════════════════════════════════════════════
 // MEMEX
@@ -999,6 +1015,30 @@ skCanvas.addEventListener('mousemove', e => {
   drawSketchpad();
 });
 skCanvas.addEventListener('mouseup', () => { sketchDragging = null; });
+
+// Touch support for Sketchpad
+function getTouchPos(canvas, touch) {
+  const rect = canvas.getBoundingClientRect();
+  return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+}
+skCanvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const pos = getTouchPos(skCanvas, e.touches[0]);
+  const p = nearestPoint(pos);
+  if(p && dist(p, pos) < 20) { sketchDragging = p.id; return; }
+  // Simulate click for drawing
+  const clickEvt = new MouseEvent('click', { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY });
+  skCanvas.dispatchEvent(clickEvt);
+}, {passive: false});
+skCanvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if(sketchDragging === null) return;
+  const pos = getTouchPos(skCanvas, e.touches[0]);
+  sketchPoints[sketchDragging].x = pos.x;
+  sketchPoints[sketchDragging].y = pos.y;
+  drawSketchpad();
+}, {passive: false});
+skCanvas.addEventListener('touchend', () => { sketchDragging = null; });
 
 function addPoint(p) { const pt = {x:p.x, y:p.y, id:sketchPoints.length}; sketchPoints.push(pt); return pt; }
 function nearestPoint(p) {
